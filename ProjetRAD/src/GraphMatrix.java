@@ -140,10 +140,31 @@ public class GraphMatrix extends Graph {
 			// on recupere l'indice du noeud dans la liste nodes
 			int indice = this.nodes.indexOf(n1);
 			// on suprime tous les arcs lies a ce noeud dans la matrice edges
-			for (int i = 0; i < taille; i++) {
+			/*for (int i = 0; i < taille; i++) {
 				this.edges[i][indice] = 0;
 				this.edges[indice][i] = 0;
+			}*/
+			
+			//chaque case de la matrice apres l'indice du noeud supprime
+			//donne sa valeur a la case precedente puis se met a 0
+			for (int i = 0; i < this.taille; i++) {
+				for (int j = indice; j < this.taille; j++) {
+					
+					this.edges[i][j] = 0;
+					
+					if(j < taille-1){ddd
+					this.edges[i][j] = this.edges[i][j+1];
+					}
+					
+					this.edges[j][i] = 0;
+					
+					if(j < taille-1){
+					this.edges[j][i] = this.edges[j+1][i];
+					}
+					
+				}
 			}
+			
 			// on supprime le noeud de la liste nodes
 			this.nodes.remove(indice);
 		}
@@ -190,8 +211,8 @@ public class GraphMatrix extends Graph {
 			// pour chaque case de la matrice
 			for (int i = 0; i < this.taille; i++) {
 				for (int j = 0; j < this.taille; j++) {
-					// si le poids de l'arc >= lightest et que le poid n'est pas 0
-					if ((this.edges[i][j] <= lightest) && this.edges[i][j] != 0) {
+					// si le poids de l'arc <= lightest et que le poid n'est pas 0
+					if (this.edges[i][j] <= lightest && this.edges[i][j] > 0 ) {
 						// on met a jour le plus faible poids trouve
 						lightest = this.edges[i][j];
 						// on enregistre les noms des 2 noeuds correspondant
