@@ -13,7 +13,7 @@ public abstract class Graph {
 
 	public abstract int getDegree(String n1);
 
-	public abstract int[] getLightest();
+	public abstract String[] getLightest();
 
 	public abstract double getWeight(String n1, String n2);
 

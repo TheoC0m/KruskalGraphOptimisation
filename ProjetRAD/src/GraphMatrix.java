@@ -175,16 +175,16 @@ public class GraphMatrix extends Graph {
 	 * arc de poids le plus faible rencontre pendant le parcours de la matrice
 	 */
 	@Override
-	public int[] getLightest() {
+	public String[] getLightest() {
 
 		// on initialise le tableau de taille 2 qui contiendra les indices des 2
 		// noeuds d'arc au poids le plus faible a null
-		int[] noeuds = null;
+		String[] noeuds = null;
 		// si le graphe contient des arcs
 		if (this.numEdge() != 0) {
-			// noeuds devient tableau de taille 2 qui contiendra les indices des
+			// noeuds devient tableau de taille 2 qui contiendra les noms des
 			// 2 noeuds d'arc au poids le plus faible
-			noeuds = new int[2];
+			noeuds = new String[2];
 			// on initialise le poids le plus faible a la plus grande valeur possible pour un double
 			double lightest = Double.MAX_VALUE;
 			// pour chaque case de la matrice
@@ -194,10 +194,10 @@ public class GraphMatrix extends Graph {
 					if ((this.edges[i][j] <= lightest) && this.edges[i][j] != 0) {
 						// on met a jour le plus faible poids trouve
 						lightest = this.edges[i][j];
-						// on enregistre les indices des 2 noeuds correspondant
+						// on enregistre les noms des 2 noeuds correspondant
 						// a cet arc
-						noeuds[0] = i;
-						noeuds[1] = j;
+						noeuds[0] = this.nodes.get(i);
+						noeuds[1] = this.nodes.get(j);
 					}
 				}
 			}
@@ -245,4 +245,13 @@ public class GraphMatrix extends Graph {
 		return nbarcs/2;
 	}
 
+	public int getTaille() {
+		return taille;
+	}
+
+	public List<String> getNodes() {
+		return nodes;
+	}
+
+	
 }

@@ -22,6 +22,8 @@ public class TestGraph {
 		System.out.println(g.numEdge());
 		System.out.println(g.getDegree("Lyon"));
 		System.out.println(g.getWeight("Lyon", "Metz"));
+		
+		System.out.println(g.getLightest()[0] + " " + g.getLightest()[1]);
 		g.delNode("Metz");
 		System.out.println(g.getDegree("Lyon"));
 		System.out.println(g.numEdge());
