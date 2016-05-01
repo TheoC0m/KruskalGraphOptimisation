@@ -1,9 +1,9 @@
 
 public abstract class Graph {
 
-	public abstract void addEdge();
+	public abstract void addEdge(double p, String n1, String n2);
 
-	public abstract void addNode();
+	public abstract void addNode(String n);
 
 	public abstract boolean areConnected();
 
