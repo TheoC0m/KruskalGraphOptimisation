@@ -5,7 +5,7 @@ public abstract class Graph {
 
 	public abstract void addNode(String n);
 
-	public abstract boolean areConnected();
+	public abstract boolean areConnected(String n1, String n2);
 
 	public abstract void delEdge(String n1, String n2);
 
