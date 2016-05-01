@@ -101,7 +101,7 @@ public class GraphMatrix extends Graph {
 			// si n1 n'est lie a aucun noeud on return juste false
 			//si on a trouve un chemin (true) on s'arrete, ce n'est plus la peine d'explorer les autres noeuds
 			for (int i = 0; i < taille; i++) {
-				if (!noeud_lie_connecte  (this.edges[i][this.nodes.indexOf(n1)] != 0) && !noeudsvisites.contains(this.nodes.get(i))) {
+				if (!noeud_lie_connecte && (this.edges[i][this.nodes.indexOf(n1)] != 0) && !noeudsvisites.contains(this.nodes.get(i))) {
 					noeud_lie_connecte = noeud_lie_connecte || this.recursiveConnectionCheck(this.nodes.get(i), n2, noeudsvisites);
 				}
 			}
