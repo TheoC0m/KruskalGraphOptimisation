@@ -7,18 +7,15 @@ public abstract class Graph {
 
 	public abstract boolean areConnected();
 
-	public abstract void delEdge();
+	public abstract void delEdge(String n1, String n2);
 
-	public abstract void delNode();
+	public abstract void delNode(String n1);
 
-	public abstract int getDegree();
+	public abstract int getDegree(String n1);
 
-	// changer type retour !
-	public abstract void getLightest();
+	public abstract int[] getLightest();
 
-	public abstract int getWeight();
-
-	public abstract void graph();
+	public abstract double getWeight(String n1, String n2);
 
 	public abstract int numEdge();
 }
