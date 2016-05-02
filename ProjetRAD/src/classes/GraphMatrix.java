@@ -1,3 +1,5 @@
+package classes;
+
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -289,6 +291,9 @@ public class GraphMatrix extends Graph {
 		return nbarcs / 2;
 	}
 
+	/*
+	 * Getters et setters seulement utiles aux classes de tests
+	 */
 	public int getTaille() {
 		return taille;
 	}
@@ -296,5 +301,8 @@ public class GraphMatrix extends Graph {
 	public List<String> getNodes() {
 		return nodes;
 	}
-
+	
+	public double[][] getEdges() {
+		return edges;
+	}
 }
