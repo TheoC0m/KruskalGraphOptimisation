@@ -40,7 +40,7 @@ public class TestGraph {
 		System.out.println("Nombre de connexions de test " + g.getDegree("test"));
 		System.out.println("Metz et test sont-elles reliees ? : " + g.areConnected("Metz", "test"));
 		System.out.println("Metz et test2 sont-elles reliees ? : " + g.areConnected("Metz", "test2"));
-		System.out.println("\n Suppression de Nancy...");  
+		System.out.println("\nSuppression de Nancy...");  
 		g.delNode("Nancy");
 		System.out.println("Nouveau nombre d'arcs : " + g.numEdge());
 		System.out.println("Nouvel arc le plus leger : " + g.getLightest()[0] + "-" + g.getLightest()[1]);
@@ -48,7 +48,7 @@ public class TestGraph {
 		System.out.println("Nouveau nombre de connexions de Metz : " + g.getDegree("Metz"));
 		System.out.println("Distance Paris-Lille : " + g.getWeight("Paris", "Lille"));
 		System.out.println("Distance Lyon-test: " + g.getWeight("Lyon", "test"));
-		System.out.println("\n Suppression de test...");  
+		System.out.println("\nSuppression de test...");  
 		g.delNode("test");
 		System.out.println("Nouveau nombre d'arcs : " + g.numEdge());
 		System.out.println("Nouvel arc le plus leger : " + g.getLightest()[0] + "-" + g.getLightest()[1]);

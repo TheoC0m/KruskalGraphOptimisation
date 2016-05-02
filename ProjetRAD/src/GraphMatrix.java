@@ -1,5 +1,6 @@
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GraphMatrix extends Graph {
@@ -71,18 +72,20 @@ public class GraphMatrix extends Graph {
 				this.nodes.add(n);
 			}
 		} else {
-			//throw new IllegalStateException("Le nombre maximal de noeuds est atteint");
+			// throw new IllegalStateException("Le nombre maximal de noeuds est
+			// atteint");
 			System.out.println("Le nombre maximal de noeuds est atteint");
 		}
 
 	}
-	
+
 	/*
-	 * n1 : noeud courant, n2 noeud d'arrive, noeudsvisites : liste des noeuds deja visites 
-	 * pour eviter les boucles infinies en cas de circuit dans le graphe
+	 * n1 : noeud courant, n2 noeud d'arrive, noeudsvisites : liste des noeuds
+	 * deja visites pour eviter les boucles infinies en cas de circuit dans le
+	 * graphe
 	 */
 	private boolean recursiveConnectionCheck(String n1, String n2, ArrayList<String> noeudsvisites) {
-		//on ajoute le noeud n1 a la liste des noeuds visites
+		// on ajoute le noeud n1 a la liste des noeuds visites
 		noeudsvisites.add(n1);
 		// si les noeuds sont directement lies
 		if (this.edges[this.nodes.indexOf(n1)][this.nodes.indexOf(n2)] != 0) {
@@ -95,14 +98,18 @@ public class GraphMatrix extends Graph {
 			// chemin vers n2
 			boolean noeud_lie_connecte = false;
 			// pour chaque noeud potentiellement lie a n1 on verifie si ils sont
-			// lies par un arc, et qu'ils ne sont pas présent dans la liste des noeuds deja visites
+			// lies par un arc, et qu'ils ne sont pas présent dans la liste des
+			// noeuds deja visites
 			// -> on fait un appel recursif
 			// avec false OU le resultat de cet appel recursif
 			// si n1 n'est lie a aucun noeud on return juste false
-			//si on a trouve un chemin (true) on s'arrete, ce n'est plus la peine d'explorer les autres noeuds
+			// si on a trouve un chemin (true) on s'arrete, ce n'est plus la
+			// peine d'explorer les autres noeuds
 			for (int i = 0; i < taille; i++) {
-				if (!noeud_lie_connecte && (this.edges[i][this.nodes.indexOf(n1)] != 0) && !noeudsvisites.contains(this.nodes.get(i))) {
-					noeud_lie_connecte = noeud_lie_connecte || this.recursiveConnectionCheck(this.nodes.get(i), n2, noeudsvisites);
+				if (!noeud_lie_connecte && (this.edges[i][this.nodes.indexOf(n1)] != 0)
+						&& !noeudsvisites.contains(this.nodes.get(i))) {
+					noeud_lie_connecte = noeud_lie_connecte
+							|| this.recursiveConnectionCheck(this.nodes.get(i), n2, noeudsvisites);
 				}
 			}
 			return noeud_lie_connecte;
@@ -116,7 +123,7 @@ public class GraphMatrix extends Graph {
 		boolean connected = false;
 		// Si les noeuds existent
 		if (this.nodeExists(n1) && this.nodeExists(n2)) {
-			//on cherche si ils sont lies par un chemin
+			// on cherche si ils sont lies par un chemin
 			connected = this.recursiveConnectionCheck(n1, n2, new ArrayList<String>());
 		}
 		return connected;
@@ -139,34 +146,47 @@ public class GraphMatrix extends Graph {
 		if (this.nodeExists(n1)) {
 			// on recupere l'indice du noeud dans la liste nodes
 			int indice = this.nodes.indexOf(n1);
-			// on suprime tous les arcs lies a ce noeud dans la matrice edges
-			/*for (int i = 0; i < taille; i++) {
-				this.edges[i][indice] = 0;
-				this.edges[indice][i] = 0;
-			}*/
-			
-			//chaque case de la matrice apres l'indice du noeud supprime
-			//donne sa valeur a la case precedente puis se met a 0
-			for (int i = 0; i < this.taille; i++) {
-				for (int j = indice; j < this.taille; j++) {
-					
-					this.edges[i][j] = 0;
-					
-					if(j < taille-1){ddd
-					this.edges[i][j] = this.edges[i][j+1];
-					}
-					
-					this.edges[j][i] = 0;
-					
-					if(j < taille-1){
-					this.edges[j][i] = this.edges[j+1][i];
-					}
-					
-				}
-			}
-			
 			// on supprime le noeud de la liste nodes
 			this.nodes.remove(indice);
+			// il faut mettre a jour la matrice contenant les arcs, car les
+			// indices
+			// de nodes sont decales de -1 par rapport a ceux de la matrice
+			// on cree une nouvelle matrice vide, de meme taille
+			double[][] newmatrix = new double[taille][taille];
+			// on la remplie de 0
+			for (int k = 0; k < taille; k++) {
+				Arrays.fill(newmatrix[k], 0);
+			}
+			// on initialise les variables qui permettront de se "deplacer" dans
+			// la nouvelle matrice
+			int newrow = 0;
+			int newcol = 0;
+			// pour chaque ligne
+			for (int i = 0; i < taille; ++i) {
+				// si on est pas sur la ligne de l'indice a supprimer
+				if (i != indice) {
+					// pour chaque colonne
+					for (int j = 0; j < taille; ++j) {
+						// si on est pas sur la colonne d'indice a supprimer
+						if (j != indice) {
+							// alors la coordonee correspondante de la nouvelle
+							// matrice prend la valeur de celle de l'ancienne
+							newmatrix[newrow][newcol] = this.edges[i][j];
+							// on passe a la colonne suivante dans la nouvelle
+							// matrice
+							++newcol;
+						}
+					}
+					// on passe a la ligne suivante dans la nouvelle matrice
+					++newrow;
+					// et on revient a la premiere colonne
+					newcol = 0;
+				}
+			}
+			// on met a jour la matrice edges du graphe avec la matrice
+			// nouvellement cree
+			this.edges = newmatrix;
+
 		}
 		// on ne fait rien
 
@@ -206,13 +226,15 @@ public class GraphMatrix extends Graph {
 			// noeuds devient tableau de taille 2 qui contiendra les noms des
 			// 2 noeuds d'arc au poids le plus faible
 			noeuds = new String[2];
-			// on initialise le poids le plus faible a la plus grande valeur possible pour un double
+			// on initialise le poids le plus faible a la plus grande valeur
+			// possible pour un double
 			double lightest = Double.MAX_VALUE;
 			// pour chaque case de la matrice
 			for (int i = 0; i < this.taille; i++) {
 				for (int j = 0; j < this.taille; j++) {
-					// si le poids de l'arc <= lightest et que le poid n'est pas 0
-					if (this.edges[i][j] <= lightest && this.edges[i][j] > 0 ) {
+					// si le poids de l'arc <= lightest et que le poid n'est pas
+					// 0
+					if (this.edges[i][j] <= lightest && this.edges[i][j] > 0) {
 						// on met a jour le plus faible poids trouve
 						lightest = this.edges[i][j];
 						// on enregistre les noms des 2 noeuds correspondant
@@ -262,8 +284,9 @@ public class GraphMatrix extends Graph {
 				}
 			}
 		}
-		// on retourne le nombre d'arcs du graphe /2 car il y a 2 enregistrements pour 1 meme arc
-		return nbarcs/2;
+		// on retourne le nombre d'arcs du graphe /2 car il y a 2
+		// enregistrements pour 1 meme arc
+		return nbarcs / 2;
 	}
 
 	public int getTaille() {
@@ -274,5 +297,4 @@ public class GraphMatrix extends Graph {
 		return nodes;
 	}
 
-	
 }
